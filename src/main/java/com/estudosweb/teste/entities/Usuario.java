@@ -1,12 +1,15 @@
 package com.estudosweb.teste.entities;
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,11 +23,15 @@ public class Usuario implements Serializable {
 	private Long id;
 	private String nome;
 	private String email;
-	private String senha;
 	private String telefone;
+	private String senha;
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Usuario() {
 	}
+	
 
 	public Usuario(Long id, String nome, String email, String senha, String telefone) {
 		super();
@@ -74,10 +81,17 @@ public class Usuario implements Serializable {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	public List<Pedido> getOrders() {
+		return pedidos;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int resultado = 1;
+		resultado = prime * resultado + ((id == null) ? 0 : id.hashCode());
+		return resultado;
 	}
 
 	@Override
