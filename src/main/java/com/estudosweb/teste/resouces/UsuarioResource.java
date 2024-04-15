@@ -1,15 +1,15 @@
-package com.estudosweb.teste.recursos;
+package com.estudosweb.teste.resouces;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.estudosweb.teste.entidades.Usuario;
+import com.estudosweb.teste.entities.Usuario;
 
 @RestController
 @RequestMapping(value = "/usuarios")
-public class RecursoUsuario {
+public class UsuarioResource {
 	
 	@GetMapping
 	public ResponseEntity<Usuario> findAll() {

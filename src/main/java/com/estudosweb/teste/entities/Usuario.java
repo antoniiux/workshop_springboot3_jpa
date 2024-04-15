@@ -1,4 +1,4 @@
-package com.estudosweb.teste.entidades;
+package com.estudosweb.teste.entities;
 
 import java.io.Serializable;
 
