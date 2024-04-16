@@ -3,7 +3,7 @@ package com.estudosweb.teste.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.estudosweb.teste.entities.enums.PedidoStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,9 +21,9 @@ public class Pedido implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern  = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
+	
+	private Integer pedidoStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
@@ -32,11 +32,12 @@ public class Pedido implements Serializable {
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Instant moment, Usuario cliente) {
+	public Pedido(Long id, Instant moment, PedidoStatus pedidoStatus, Usuario cliente) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		this.cliente = cliente;
+		setPedidoStatus(pedidoStatus);
 	}
 
 	public Long getId() {
@@ -55,14 +56,24 @@ public class Pedido implements Serializable {
 		this.moment = moment;
 	}
 
-	public Usuario getCliente() {
+	public Usuario getClient() {
 		return cliente;
 	}
 
-	public void setCliente(Usuario cliente) {
+	public void setClient(Usuario cliente) {
 		this.cliente = cliente;
 	}
 
+	public PedidoStatus getPedidoStatus() {
+		return PedidoStatus.valueOf(pedidoStatus);
+	}
+
+	public void setPedidoStatus(PedidoStatus pedidoStatus) {
+		if (pedidoStatus != null) {
+			this.pedidoStatus = pedidoStatus.getCode();
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,11 +90,11 @@ public class Pedido implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pedido pedido = (Pedido) obj;
+		Pedido other = (Pedido) obj;
 		if (id == null) {
-			if (pedido.id != null)
+			if (other.id != null)
 				return false;
-		} else if (!id.equals(pedido.id))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

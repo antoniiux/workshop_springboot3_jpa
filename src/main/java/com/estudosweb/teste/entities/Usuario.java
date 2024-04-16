@@ -15,10 +15,9 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_usuario")
-
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -26,22 +25,21 @@ public class Usuario implements Serializable {
 	private String email;
 	private String telefone;
 	private String senha;
-	
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Usuario() {
 	}
-	
 
-	public Usuario(Long id, String nome, String email, String senha, String telefone) {
+	public Usuario(Long id, String nome, String email, String telefone, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
 		this.telefone = telefone;
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -52,11 +50,11 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
+	public String getName() {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setName(String nome) {
 		this.nome = nome;
 	}
 
@@ -68,26 +66,26 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getTelefone() {
+	public String getPhone() {
 		return telefone;
 	}
 
-	public void setTelefone(String telefone) {
+	public void setPhone(String telefone) {
 		this.telefone = telefone;
 	}
-	
-	public List<Pedido> getOrders() {
-		return pedidos;
+
+	public String getPassword() {
+		return senha;
 	}
 
+	public void setPassword(String senha) {
+		this.senha = senha;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
