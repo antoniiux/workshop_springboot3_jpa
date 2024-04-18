@@ -2,15 +2,16 @@ package com.estudosweb.teste.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_categoria")
@@ -20,18 +21,19 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String nome;
+	private String name;
 	
-	@Transient
-	private Set<Produto> products = new HashSet<>();
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categorias")
+	private Set<Produto> produtos = new HashSet<>();
 	
 	public Categoria () {
 	}
 
-	public Categoria(Long id, String nome) {
+	public Categoria(Long id, String name) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -43,23 +45,23 @@ public class Categoria implements Serializable {
 	}
 
 	public String getName() {
-		return nome;
+		return name;
 	}
 
-	public void setName(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
-	public Set<Produto> getProducts() {
-		return products;
+	public Set<Produto> getProdutos() {
+		return produtos;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		int resultado = 1;
+		resultado = prime * resultado + ((id == null) ? 0 : id.hashCode());
+		return resultado;
 	}
 
 	@Override

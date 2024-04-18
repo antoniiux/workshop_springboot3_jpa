@@ -3,13 +3,15 @@ package com.estudosweb.teste.entities;
 	import java.io.Serializable;
 	import java.util.HashSet;
 	import java.util.Set;
-
+	
 	import jakarta.persistence.Entity;
 	import jakarta.persistence.GeneratedValue;
 	import jakarta.persistence.GenerationType;
 	import jakarta.persistence.Id;
+	import jakarta.persistence.JoinColumn;
+	import jakarta.persistence.JoinTable;
+	import jakarta.persistence.ManyToMany;
 	import jakarta.persistence.Table;
-	import jakarta.persistence.Transient;
 
 	@Entity
 	@Table(name = "tb_produto")
@@ -19,21 +21,22 @@ package com.estudosweb.teste.entities;
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private Long id;
-		private String nome;
+		private String name;
 		private String descricao;
 		private Double preco;
 		private String imgUrl;
 
-		@Transient
-		private Set<Produto> categories = new HashSet<>();
+		@ManyToMany
+		@JoinTable(name = "tb_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+		private Set<Categoria> categorias = new HashSet<>();
 
 		public Produto() {
 		}
 
-		public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) {
+		public Produto(Long id, String name, String descricao, Double preco, String imgUrl) {
 			super();
 			this.id = id;
-			this.nome = nome;
+			this.name = name;
 			this.descricao = descricao;
 			this.preco = preco;
 			this.imgUrl = imgUrl;
@@ -48,26 +51,26 @@ package com.estudosweb.teste.entities;
 		}
 
 		public String getName() {
-			return nome;
+			return name;
 		}
 
-		public void setName(String nome) {
-			this.nome = nome;
+		public void setName(String name) {
+			this.name = name;
 		}
 
-		public String getDescription() {
+		public String getDescricao() {
 			return descricao;
 		}
 
-		public void setDescription(String descricao) {
+		public void setDescricao(String descricao) {
 			this.descricao = descricao;
 		}
 
-		public Double getPrice() {
+		public Double getPreco() {
 			return preco;
 		}
 
-		public void setPrice(Double preco) {
+		public void setPreco(Double preco) {
 			this.preco = preco;
 		}
 
@@ -79,16 +82,16 @@ package com.estudosweb.teste.entities;
 			this.imgUrl = imgUrl;
 		}
 
-		public Set<Produto> getCategories() {
-			return categories;
+		public Set<Categoria> getCategorias() {
+			return categorias;
 		}
 
 		@Override
 		public int hashCode() {
 			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((id == null) ? 0 : id.hashCode());
-			return result;
+			int resultado = 1;
+			resultado = prime * resultado + ((id == null) ? 0 : id.hashCode());
+			return resultado;
 		}
 
 		@Override
